@@ -1,29 +1,38 @@
 exports.getProdutorioIterativo = (req, res, next) => {
-    let m = req.params.m;
-    let n = req.params.n;
-    let result = produtorioIterativo(m, n);
+    var m = req.params.m;
+    var n = req.params.n;
+    var result = parseInt(produtorioIterativo(m, n));
     res.status(200).send({'result':result, 'm':m, 'n':n});
  };
 
  exports.getProdutorioRecursivo = (req, res, next) => {
-    let m = req.params.m;
-    let n = req.params.n;
-    let result = produtorioRecursivo(m, n);
+    var m = req.params.m;
+    var n = req.params.n;
+    var result = parseInt(produtorioRecursivo(m, n));
     res.status(200).send({'result':result, 'm':m, 'n':n});
  };
  
-function produtorioIterativo(m, n){
-    if(m == n)
-        return(n + (1/n));
-    else
-        return (m + (1/m));
+function produtorioIterativo(m, n){    
+    var r = 1;
+    m = parseInt(m);
+    n = parseInt(n);
+    for(i = m; i <= n; i += 1){
+        console.log('i '+i);
+        r *= i + (1 / i);
+    }
+    console.log('Recursivo');
+    return r;
 }
 
 function produtorioRecursivo(m, n){
-    let i = 1;
-    let r = 1;
-    for(i = m; i <= n; i += 1){
-        r *= i + (1 / i);
+    m = parseInt(m);
+    n = parseInt(n);
+    if(m == n){
+        console.log('m=n'+m + '-' +n);
+        return(n + (1/n));
     }
-    return r;
+    else{
+        console.log('m!=n'+m + '-' +n);
+        return (m + (1/m)) * produtorioRecursivo(m+1, n);
+    }
 }
